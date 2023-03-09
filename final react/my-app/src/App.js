@@ -6,7 +6,7 @@ import Login from './views/Login';
 import Cart from './views/Cart';
 import Bio from './views/Bio';
 import CartSuccess from './CartSuccess';
-import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import './App.css';
 
 export default function App() {
@@ -46,18 +46,19 @@ export default function App() {
         localStorage.setItem('user', JSON.stringify(user));
         setUser(user);
     };
-
+    
     const logMeOut = () => {
         localStorage.removeItem('user');
         setUser({});
     };
-
+    
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
+        console.log('Stored user:', storedUser);
         if (storedUser) {
-            setUser(JSON.parse(storedUser));
+          setUser(JSON.parse(storedUser));
         }
-    }, []);
+      }, []);
 
     const addProduct = (product, size) => {
         product.size = size;
@@ -99,7 +100,7 @@ export default function App() {
         getCartAPI(user)
     }, [user])
 
-    const isLoggedIn = !!user.apitoken;
+    
     return (
         <BrowserRouter>
             <div>
@@ -108,9 +109,9 @@ export default function App() {
                 <Routes>
                     <Route path='/Login' element={<Login logMeIn={logMeIn} />} />
                     <Route path='/Signup' element={<Signup />} />
-                    <Route path='/' element={isLoggedIn ? <Home addProduct={addProduct} user={user} setMessages={setMessages} /> : <Navigate to="/Login" />} />
-                    <Route path='/Cart' element={isLoggedIn ? <Cart cart={cart} removeProduct={removeProduct} user={user} setMessages={setMessages} /> : <Navigate to="/Login" />} />
-                    <Route path='/Bio' element={isLoggedIn ? < Bio /> : <Navigate to="/Login" />} />
+                    <Route path='/' element={ <Home addProduct={addProduct} user={user} setMessages={setMessages} /> } />
+                    <Route path='/Cart' element={ <Cart cart={cart} removeProduct={removeProduct} user={user} setMessages={setMessages} /> } />
+                    <Route path='/Bio' element={< Bio /> } />
                     <Route path="/CartSuccess" element={<CartSuccess setCart={setCart}/>} />
                 </Routes>
                 <footer>

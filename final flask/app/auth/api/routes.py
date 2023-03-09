@@ -39,7 +39,7 @@ def create_checkout_session():
             mode='payment',
             success_url=YOUR_DOMAIN + '/CartSuccess',
 
-            cancel_url=YOUR_DOMAIN + '?canceled=true',
+            cancel_url=YOUR_DOMAIN + '/Cart',
         )
     except Exception as e:
         return str(e)
